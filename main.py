@@ -1,12 +1,10 @@
 from fastapi import FastAPI
-from typing import Union
+from database import engine
+import mobile_app.mobile_models as mobile_models
+from mobile_app.mobile_routes import router as mobile_router
 
-app = FastAPI()
+mobile_models.Base.metadata.create_all(bind = engine)
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+app = FastAPI(title= "Kupur Backend")
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+app.include_router(mobile_router)
