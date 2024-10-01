@@ -19,7 +19,3 @@ def get_news_list(db: Session = Depends(get_db)):
 @router.delete("/news/{id}", response_model= common_schemas.StatusResponse, tags=["Not Mobile"])
 def delete_news_by_id(id: int, db: Session = Depends(get_db)):
     return crud.deleteNewsById(db = db, id= id)
-
-@router.get("/news/{id}", response_model= mobile_schemas.News, tags=["Mobile"])
-def get_news_detail(id: int, db: Session = Depends(get_db)):
-    return crud.get_news_detail_by_id(db = db, id = id)
