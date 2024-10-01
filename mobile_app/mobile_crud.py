@@ -29,9 +29,17 @@ def deleteNewsById(db: Session, id: int):
     db_news = db.query(mobile_models.News).filter(mobile_models.News.id == id).first()
 
     if db_news is None:
-        raise HTTPException(status_code=404, detail="News is not found")
+        raise HTTPException(status_code=404, detail="News is not found.")
     
     db.delete(db_news)
     db.commit()
 
     return common_schemas.StatusResponse(status= True)
+
+def get_news_detail_by_id(db: Session, id: int):
+    db_news = db.query(mobile_models.News).filter(mobile_models.News.id == id).first()
+
+    if db_news is None:
+        raise HTTPException(status_code=404, detail="News is not found.")
+    
+    return db_news
