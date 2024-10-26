@@ -24,6 +24,10 @@ def delete_news_by_id(id: int, db: Session = Depends(get_db)):
 def get_news_detail(id: int, db: Session = Depends(get_db)):
     return crud.get_news_detail_by_id(db = db, id = id)
 
+@router.put("/news/{id}", response_model=mobile_schemas.CreateNews)
+def update_news_detail(id: int, updated_news: mobile_schemas.CreateNews, db: Session = Depends(get_db)):
+    return crud.update_news(db = db, id = id, updated_news= updated_news)
+
 @router.get("/systemCheck", response_model=mobile_schemas.SystemCheckResponse, tags=["Mobile"])
 def system_check(db: Session = Depends(get_db)):
     return crud.get_system_check_informations(db = db)
