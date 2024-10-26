@@ -20,3 +20,9 @@ class CreateNews(BaseModel):
     category: str
     author: str
     date: str
+
+class SystemCheckResponse(BaseModel):
+    minimumIOSVersion: str
+    minimumAndroidVersion: str
+    appStoreUrl: str
+    playStoreUrl: str
