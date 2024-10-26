@@ -43,3 +43,32 @@ def get_news_detail_by_id(db: Session, id: int):
         raise HTTPException(status_code=404, detail="News is not found.")
     
     return db_news
+
+def get_system_check_informations(db: Session):
+    db_system_check = db.query(mobile_models.SystemCheck).first()
+
+    if db_system_check is None:
+        raise HTTPException(status_code=404, detail="System check is not found.")
+
+    return mobile_schemas.SystemCheckResponse(
+        minimumIOSVersion = db_system_check.minimumIOSVersion,
+        minimumAndroidVersion = db_system_check.minimumAndroidVersion,
+        appStoreUrl = db_system_check.appStoreUrl,
+        playStoreUrl = db_system_check.playStoreUrl
+    )
+
+def update_system_check_informations(db: Session, system_check_informations: mobile_schemas.SystemCheckResponse):
+    db_system_check = db.query(mobile_models.SystemCheck).first()
+
+    if db_system_check is None:
+        raise HTTPException(status_code=404, detail="System check is not found.")
+
+    db_system_check.minimumIOSVersion = system_check_informations.minimumIOSVersion
+    db_system_check.minimumAndroidVersion = system_check_informations.minimumAndroidVersion
+    db_system_check.appStoreUrl = system_check_informations.appStoreUrl
+    db_system_check.playStoreUrl = system_check_informations.playStoreUrl
+
+    db.commit()
+    db.refresh(db_system_check)
+
+    return system_check_informations
