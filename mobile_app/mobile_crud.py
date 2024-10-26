@@ -72,3 +72,23 @@ def update_system_check_informations(db: Session, system_check_informations: mob
     db.refresh(db_system_check)
 
     return system_check_informations
+
+def update_news(db: Session, id: int, updated_news: mobile_schemas.CreateNews):
+    db_news = db.query(mobile_models.News).filter(mobile_models.News.id == id).first()
+
+    if db_news is None:
+        raise HTTPException(status_code=404, detail="News is not found.")
+
+    db_news.title = updated_news.title
+    db_news.description = updated_news.description
+    db_news.source = updated_news.source
+    db_news.sourceUrl = updated_news.sourceUrl
+    db_news.imageUrl = updated_news.imageUrl
+    db_news.category = updated_news.category
+    db_news.author = updated_news.author
+    db_news.date = updated_news.date
+
+    db.commit()
+    db.refresh(db_news)
+
+    return updated_news
