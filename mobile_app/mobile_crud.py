@@ -9,7 +9,7 @@ def createNews(db: Session, news: mobile_schemas.CreateNews):
         title = news.title,
         description = news.description,
         source = news.source,
-        sourceUrl = news.source,
+        sourceUrl = news.sourceUrl,
         imageUrl = news.imageUrl,
         category = news.category,
         author = news.author,
